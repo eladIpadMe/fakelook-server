@@ -14,12 +14,15 @@ namespace auth_example.Services
 {
     public class TokenService : ITokenService
     {
+
+
         private IConfiguration _config;
 
 
         public TokenService(IConfiguration config)
         {
             _config = config;
+            
         }
         public string CreateToken(User user)
         {
@@ -27,6 +30,8 @@ namespace auth_example.Services
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[] {
             new Claim(ClaimTypes.Name, user.Id.ToString()),
+            new Claim(ClaimTypes.Name, user.Id.ToString()),
+
             //new Claim(ClaimTypes.Role, user.Role),
             //new Claim(ClaimTypes.NameIdentifier,
             //Guid.NewGuid().ToString())
