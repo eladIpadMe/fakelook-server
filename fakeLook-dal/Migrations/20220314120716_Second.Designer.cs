@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using fakeLook_dal.Data;
 
@@ -11,9 +12,10 @@ using fakeLook_dal.Data;
 namespace fakeLook_dal.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220314120716_Second")]
+    partial class Second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -530,58 +532,71 @@ namespace fakeLook_dal.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2022, 3, 14, 14, 11, 42, 48, DateTimeKind.Local).AddTicks(4956),
+                            Date = new DateTime(2022, 3, 14, 14, 7, 15, 499, DateTimeKind.Local).AddTicks(582),
                             Description = "post 1",
                             ImageSorce = "https://s.yimg.com/ny/api/res/1.2/PPu_U6UY8JjEGaR3t4T3wQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTcyMDtjZj13ZWJw/https://s.yimg.com/uu/api/res/1.2/Rffcviow.eCHjmEu2msLJg--~B/aD0xNzU3O3c9MjM0MzthcHBpZD15dGFjaHlvbg--/https://media.zenfs.com/en/insider_articles_922/c6ce8d0b9a7b28f9c2dee8171da98b8f",
                             UserId = 1,
-                            X_Position = 23.85541839805293,
-                            Y_Position = 22.556074920350245,
-                            Z_Position = 39.601946013451716
+                            X_Position = 27.799598066687192,
+                            Y_Position = 0.44168477424302299,
+                            Z_Position = 47.836220431289433
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2022, 3, 14, 14, 11, 42, 48, DateTimeKind.Local).AddTicks(4996),
+                            Date = new DateTime(2022, 3, 14, 14, 7, 15, 499, DateTimeKind.Local).AddTicks(625),
                             Description = "post 2",
                             ImageSorce = "https://s.yimg.com/ny/api/res/1.2/PPu_U6UY8JjEGaR3t4T3wQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTcyMDtjZj13ZWJw/https://s.yimg.com/uu/api/res/1.2/Rffcviow.eCHjmEu2msLJg--~B/aD0xNzU3O3c9MjM0MzthcHBpZD15dGFjaHlvbg--/https://media.zenfs.com/en/insider_articles_922/c6ce8d0b9a7b28f9c2dee8171da98b8f",
                             UserId = 2,
-                            X_Position = 44.384826446176625,
-                            Y_Position = 45.759256490603704,
-                            Z_Position = 46.012264924991939
+                            X_Position = 16.553703565560934,
+                            Y_Position = 43.566710574804787,
+                            Z_Position = 25.400924278474157
                         },
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2022, 3, 14, 14, 11, 42, 48, DateTimeKind.Local).AddTicks(4998),
+                            Date = new DateTime(2022, 3, 14, 14, 7, 15, 499, DateTimeKind.Local).AddTicks(628),
                             Description = "post 3",
                             ImageSorce = "https://s.yimg.com/ny/api/res/1.2/PPu_U6UY8JjEGaR3t4T3wQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTcyMDtjZj13ZWJw/https://s.yimg.com/uu/api/res/1.2/Rffcviow.eCHjmEu2msLJg--~B/aD0xNzU3O3c9MjM0MzthcHBpZD15dGFjaHlvbg--/https://media.zenfs.com/en/insider_articles_922/c6ce8d0b9a7b28f9c2dee8171da98b8f",
                             UserId = 3,
-                            X_Position = 42.853178133890985,
-                            Y_Position = 8.409236778245571,
-                            Z_Position = 18.452186226271099
+                            X_Position = 27.445600501633198,
+                            Y_Position = 1.1415754474821183,
+                            Z_Position = 38.617284064297131
                         },
                         new
                         {
                             Id = 4,
-                            Date = new DateTime(2022, 3, 14, 14, 11, 42, 48, DateTimeKind.Local).AddTicks(5001),
+                            Date = new DateTime(2022, 3, 14, 14, 7, 15, 499, DateTimeKind.Local).AddTicks(630),
                             Description = "post 4",
                             ImageSorce = "https://s.yimg.com/ny/api/res/1.2/PPu_U6UY8JjEGaR3t4T3wQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTcyMDtjZj13ZWJw/https://s.yimg.com/uu/api/res/1.2/Rffcviow.eCHjmEu2msLJg--~B/aD0xNzU3O3c9MjM0MzthcHBpZD15dGFjaHlvbg--/https://media.zenfs.com/en/insider_articles_922/c6ce8d0b9a7b28f9c2dee8171da98b8f",
                             UserId = 4,
-                            X_Position = 35.513609591350686,
-                            Y_Position = 15.514120045783891,
-                            Z_Position = 47.009801757055754
+                            X_Position = 14.738969493557336,
+                            Y_Position = 2.144914959946437,
+                            Z_Position = 8.5451538616081404
                         },
                         new
                         {
                             Id = 5,
-                            Date = new DateTime(2022, 3, 14, 14, 11, 42, 48, DateTimeKind.Local).AddTicks(5003),
+                            Date = new DateTime(2022, 3, 14, 14, 7, 15, 499, DateTimeKind.Local).AddTicks(633),
                             Description = "post 5",
                             ImageSorce = "https://s.yimg.com/ny/api/res/1.2/PPu_U6UY8JjEGaR3t4T3wQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTcyMDtjZj13ZWJw/https://s.yimg.com/uu/api/res/1.2/Rffcviow.eCHjmEu2msLJg--~B/aD0xNzU3O3c9MjM0MzthcHBpZD15dGFjaHlvbg--/https://media.zenfs.com/en/insider_articles_922/c6ce8d0b9a7b28f9c2dee8171da98b8f",
                             UserId = 5,
-                            X_Position = 30.17282781121266,
-                            Y_Position = 17.553337493034427,
-                            Z_Position = 27.640080243115129
+                            X_Position = 12.520801860163495,
+                            Y_Position = 23.892909023001437,
+                            Z_Position = 16.563344702133286
                         });
+                });
+
+            modelBuilder.Entity("fakeLook_models.Models.Stam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Stam");
                 });
 
             modelBuilder.Entity("fakeLook_models.Models.Tag", b =>
@@ -671,7 +686,7 @@ namespace fakeLook_dal.Migrations
                             Address = "some adress",
                             FirstName = "user 1",
                             LastName = "user 1",
-                            Password = "-274656193",
+                            Password = "-372342388",
                             UserName = "user 1"
                         },
                         new
@@ -680,7 +695,7 @@ namespace fakeLook_dal.Migrations
                             Address = "some adress",
                             FirstName = "user 2",
                             LastName = "user 2",
-                            Password = "-274656193",
+                            Password = "-372342388",
                             UserName = "user 2"
                         },
                         new
@@ -689,7 +704,7 @@ namespace fakeLook_dal.Migrations
                             Address = "some adress",
                             FirstName = "user 3",
                             LastName = "user 3",
-                            Password = "-274656193",
+                            Password = "-372342388",
                             UserName = "user 3"
                         },
                         new
@@ -698,7 +713,7 @@ namespace fakeLook_dal.Migrations
                             Address = "some adress",
                             FirstName = "user 4",
                             LastName = "user 4",
-                            Password = "-274656193",
+                            Password = "-372342388",
                             UserName = "user 4"
                         },
                         new
@@ -707,7 +722,7 @@ namespace fakeLook_dal.Migrations
                             Address = "some adress",
                             FirstName = "user 5",
                             LastName = "user 5",
-                            Password = "-274656193",
+                            Password = "-372342388",
                             UserName = "user 5"
                         });
                 });
@@ -738,20 +753,20 @@ namespace fakeLook_dal.Migrations
                         new
                         {
                             Id = 1,
-                            CommentId = 8,
+                            CommentId = 9,
                             UserId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CommentId = 10,
-                            UserId = 4
+                            CommentId = 19,
+                            UserId = 2
                         },
                         new
                         {
                             Id = 3,
-                            CommentId = 8,
-                            UserId = 4
+                            CommentId = 1,
+                            UserId = 5
                         },
                         new
                         {
@@ -762,38 +777,38 @@ namespace fakeLook_dal.Migrations
                         new
                         {
                             Id = 5,
-                            CommentId = 15,
-                            UserId = 2
+                            CommentId = 2,
+                            UserId = 4
                         },
                         new
                         {
                             Id = 6,
-                            CommentId = 18,
-                            UserId = 1
+                            CommentId = 4,
+                            UserId = 2
                         },
                         new
                         {
                             Id = 7,
-                            CommentId = 16,
-                            UserId = 3
-                        },
-                        new
-                        {
-                            Id = 8,
                             CommentId = 4,
                             UserId = 4
                         },
                         new
                         {
+                            Id = 8,
+                            CommentId = 24,
+                            UserId = 1
+                        },
+                        new
+                        {
                             Id = 9,
-                            CommentId = 16,
-                            UserId = 2
+                            CommentId = 18,
+                            UserId = 5
                         },
                         new
                         {
                             Id = 10,
-                            CommentId = 2,
-                            UserId = 5
+                            CommentId = 11,
+                            UserId = 2
                         });
                 });
 

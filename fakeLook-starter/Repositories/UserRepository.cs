@@ -18,15 +18,36 @@ namespace fakeLook_starter.Repositories
         {
             _context = context;
         }
-        public Task<User> Add(User item)
-            {
-                throw new NotImplementedException();
-            }
+        public async Task<User> Add(User item)
+        {
+            var user = _context.Users.Where(x => x.UserName == item.UserName).FirstOrDefault();
+            
+            if(user == null) {
+                //item.Password = item.Password.GetHashCode().ToString();
+                var res = _context.Users.Add(item);
+                await _context.SaveChangesAsync();
+                return res.Entity;
 
-            public Task<User> Edit(User item)
-            {
-                throw new NotImplementedException();
             }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<User> Delete(User item)
+        {
+            var res = _context.Users.Remove(item);
+            await _context.SaveChangesAsync();
+            return res.Entity;
+        }
+
+        public async Task<User> Edit(User item)
+            {
+            var res = _context.Users.Update(item);
+            await _context.SaveChangesAsync();
+            return res.Entity;
+        }
 
             public ICollection<User> GetAll()
             {
@@ -40,7 +61,13 @@ namespace fakeLook_starter.Repositories
 
             public ICollection<User> GetByPredicate(Func<User, bool> predicate)
             {
-                throw new NotImplementedException();
+                return _context.Users.Where(predicate).ToList();
+            }
+
+            public User findItem(User item)
+            {
+            //item.Password = item.Password.GetHashCode().ToString();
+            return _context.Users.Where(user => user.UserName == item.UserName && user.Password == item.Password).SingleOrDefault();
             }
         }
     }

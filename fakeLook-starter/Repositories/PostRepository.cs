@@ -23,6 +23,13 @@ namespace fakeLook_starter.Repositories
             return res.Entity;
         }
 
+        public async Task<Post> Delete(Post item)
+        {
+            var res = _context.Posts.Remove(item);
+            await _context.SaveChangesAsync();
+            return res.Entity;
+        }
+
         public async Task<Post> Edit(Post item)
         {
             var res = _context.Posts.Update(item);
@@ -44,5 +51,7 @@ namespace fakeLook_starter.Repositories
         {
             return _context.Posts.Where(predicate).ToList();
         }
+
+       
     }
 }
