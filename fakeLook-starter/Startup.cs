@@ -34,9 +34,13 @@ namespace fakeLook_starter
             services.AddControllers();
             #region Setting repository and services interfaces
             services.AddTransient<IPostRepository, PostRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+
             #endregion
             #region Setting DB configuration
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IUserRepository,UserRepository>();
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
             #endregion
             #region Setting cors policy
@@ -68,7 +72,7 @@ namespace fakeLook_starter
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors(_MyAllowSpecificOrigin);
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

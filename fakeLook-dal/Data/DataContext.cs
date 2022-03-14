@@ -14,6 +14,7 @@ namespace fakeLook_dal.Data
         public DbSet<UserTaggedComment> UserTaggedComments { get; set; }
         public DbSet<UserTaggedPost> UserTaggedPosts { get; set; }
 
+        public DbSet<Group> Groups { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -50,7 +51,7 @@ namespace fakeLook_dal.Data
             AddTags();
             AddUserTaggedPosts();
             AddUserTaggedComments();
-
+            AddGroups();
 
             void AddUsers()
             {
@@ -60,7 +61,7 @@ namespace fakeLook_dal.Data
                 var users = new User[amount];
                 for (int i = 0; i < amount; i++)
                 {
-                    users[i] = new User() { Id = i + 1, Address = address, Name = name + (i + 1).ToString(), Password = password };
+                    users[i] = new User() { Id = i + 1, Address = address, FirstName = name + (i + 1).ToString(),  LastName = name + (i + 1).ToString(), Password = password, UserName = name + (i + 1).ToString() };
                 }
                 SeedDb(users);
             }
@@ -163,7 +164,22 @@ namespace fakeLook_dal.Data
             {
                 modelBuilder.Entity<T>().HasData(data);
             }
-        }
 
+            void AddGroups()
+            {
+                var name = "group ";
+                var groups = new Group[amount];
+                for (int i = 0; i < amount; i++)
+                {
+                    groups[i] = new Group() {
+                        Id = i + 1,
+                        GroupName = name + i    
+                    };
+                }
+                SeedDb(groups);
+            }
+
+
+        }
     }
 }
