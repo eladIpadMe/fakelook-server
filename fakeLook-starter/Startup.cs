@@ -14,6 +14,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using fakeLook_starter.Interfaces;
 using fakeLook_starter.Repositories;
+using auth_example.Interfaces;
+using auth_example.Services;
 
 namespace fakeLook_starter
 {
@@ -35,12 +37,15 @@ namespace fakeLook_starter
             #region Setting repository and services interfaces
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ITokenService, TokenService>();
 
             #endregion
             #region Setting DB configuration
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IUserRepository,UserRepository>();
+            services.AddScoped<ITokenService, TokenService>();
+
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
             #endregion
             #region Setting cors policy

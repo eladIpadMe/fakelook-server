@@ -11,15 +11,19 @@ namespace fakeLook_starter.Interfaces
         public Task<T> Add(T item);
         public ICollection<T> GetAll();
         public Task<T> Edit(T item);
+
+        public Task<T> Delete(T item);
         public T GetById(int id);
         public ICollection<T> GetByPredicate(Func<T, bool> predicate);
+        
     }
     public interface IUserRepository : IRepository<User>
     {
-
+        public User findItem(User item);
     }
     public interface IPostRepository : IRepository<Post>
     {
-
+           
     }
+
 }
