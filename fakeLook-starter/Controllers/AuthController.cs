@@ -1,4 +1,5 @@
 ﻿using fakeLook_models.Models;
+using fakeLook_starter.Filters;
 using fakeLook_starter.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -47,15 +48,16 @@ namespace fakeLook_starter.Controllers
             
             return Ok(new { token });
         }
-
-        [Authorize]
+        
         [HttpGet]
         [Route("TestAll")]
+        [TypeFilter(typeof(GetUserActionFilter))]
 
         public IActionResult TestAll()
         {
             return Ok();
         }
+
         [Authorize(Roles = "admin")]
         [HttpGet]
         [Route("TestAdmin")]

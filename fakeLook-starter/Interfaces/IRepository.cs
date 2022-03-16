@@ -26,4 +26,9 @@ namespace fakeLook_starter.Interfaces
            
     }
 
+    public interface IGroupRepository : IRepository<Group>
+    {
+
+    }
+
 }

@@ -17,6 +17,14 @@ using System.Text;
 using System.Threading.Tasks;
 using fakeLook_starter.Interfaces;
 using fakeLook_starter.Repositories;
+using auth_example.Interfaces;
+using auth_example.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using fakeLook_models.Models;
+using fakeLook_starter.Filters;
+using Microsoft.AspNetCore.Mvc.Filters;
 using fakeLook_models.Models;
 using fakeLook_starter.Services;
 
@@ -36,21 +44,6 @@ namespace fakeLook_starter
         public void ConfigureServices(IServiceCollection services)
         {
 
-            #region Setting repository and services interfaces
-            services.AddTransient<IPostRepository, PostRepository>();
-            services.AddTransient<IUserRepository, UserRepository>();
-            //services.AddTransient<IGroupRepository, GroupRepository>();
-
-            services.AddTransient<ITokenService, TokenService>();
-
-            #endregion
-            #region Setting DB configuration
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddScoped<IPostRepository, PostRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            //services.AddScoped<IGroupRepository, GroupRepository>();
-            #endregion
-
             #region Configure jwt Auth
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
               .AddJwtBearer(options =>
@@ -67,6 +60,7 @@ namespace fakeLook_starter
                   };
               });
             #endregion
+            //to add what i talked with yaniv about token
 
             services.AddTransient<ITokenService, TokenService>();
             //services.AddSingleton<IRepository<User>, UserRepository>();
@@ -75,6 +69,8 @@ namespace fakeLook_starter
             #region Setting repository and services interfaces
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IGroupRepository, GroupRepository>();
+
             services.AddTransient<ITokenService, TokenService>();
 
             #endregion
@@ -82,9 +78,12 @@ namespace fakeLook_starter
        
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IUserRepository,UserRepository>();
+            services.AddScoped<IGroupRepository, GroupRepository>();
+
             services.AddScoped<ITokenService, TokenService>();
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
+
             #endregion
             #region Setting cors policy
             services.AddCors(options =>
@@ -112,16 +111,16 @@ namespace fakeLook_starter
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "fakeLook_starter v1"));
             }
 
+
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
 
             app.UseRouting();
 
-            app.UseAuthorization();
+
 
             app.UseCors(_MyAllowSpecificOrigin);
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
