@@ -11,10 +11,12 @@ namespace fakeLook_starter.Repositories
     public class UserRepository : IUserRepository
     {
             readonly private DataContext _context;
+            readonly private DtoConverter _converter;
 
-        public UserRepository(DataContext context)
+        public UserRepository(DataContext context, DtoConverter converter)
         {
             _context = context;
+            _converter = converter;
         }
         public async Task<User> Add(User item)
         {
@@ -48,12 +50,14 @@ namespace fakeLook_starter.Repositories
 
             public ICollection<User> GetAll()
             {
+
             return _context.Users.ToList();
             }
 
             public User GetById(int id)
             {
-                return _context.Users.SingleOrDefault(u => u.Id == id);
+            var user = _context.Users.SingleOrDefault(u => u.Id == id);
+            return _converter.DtoUser(user);
             }
 
             public ICollection<User> GetByPredicate(Func<User, bool> predicate)

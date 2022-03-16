@@ -36,7 +36,7 @@ namespace fakeLook_starter.Controllers
             var dbUser = _repo.findItem(user);
             if (dbUser == null) return Problem("user not in system");
             var token = _tokenService.CreateToken(dbUser);
-            return Ok(new { token });
+            return Ok(new {token= token,userId= dbUser.Id });
         }
         [HttpPost]
         [Route("SignUp")]

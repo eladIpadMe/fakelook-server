@@ -25,6 +25,7 @@ using fakeLook_starter.Filters;
 using Microsoft.AspNetCore.Mvc.Filters;
 using fakeLook_models.Models;
 using fakeLook_starter.Services;
+using System.Text.Json.Serialization;
 
 namespace fakeLook_starter
 {
@@ -59,7 +60,10 @@ namespace fakeLook_starter
               });
             #endregion
             //to add what i talked with yaniv about token
-
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            });
             services.AddTransient<ITokenService, TokenService>();
             //services.AddSingleton<IRepository<User>, UserRepository>();
 
@@ -74,7 +78,7 @@ namespace fakeLook_starter
 
             #endregion
             #region Setting DB configuration
-       
+            services.AddScoped<IDtoConverter, DtoConverter>();
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IUserRepository,UserRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
