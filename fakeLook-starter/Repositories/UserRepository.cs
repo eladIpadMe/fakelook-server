@@ -1,6 +1,7 @@
 ﻿using fakeLook_dal.Data;
 using fakeLook_models.Models;
 using fakeLook_starter.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,9 +35,10 @@ namespace fakeLook_starter.Repositories
             }
         }
 
-        public async Task<User> Delete(User item)
+        public async Task<User> Delete(int id)
         {
-            var res = _context.Users.Remove(item);
+            var user = GetById(id);
+            var res = _context.Users.Remove(user);
             await _context.SaveChangesAsync();
             return res.Entity;
         }
@@ -51,13 +53,15 @@ namespace fakeLook_starter.Repositories
             public ICollection<User> GetAll()
             {
 
-            return _context.Users.ToList();
+            return _context.Users
+                .Select(DtoLogic)
+                .ToList();
             }
 
             public User GetById(int id)
             {
-            var user = _context.Users.SingleOrDefault(u => u.Id == id);
-            return _converter.DtoUser(user);
+            return _context.Users.Select(DtoLogic).SingleOrDefault(u => u.Id == id);
+    
             }
 
             public ICollection<User> GetByPredicate(Func<User, bool> predicate)
@@ -70,6 +74,12 @@ namespace fakeLook_starter.Repositories
             //item.Password = item.Password.GetHashCode().ToString();
             return _context.Users.Where(user => user.UserName == item.UserName && user.Password == item.Password).SingleOrDefault();
             }
+
+        private User DtoLogic(User user)
+        {
+            var dtoUser = _converter.DtoUser(user);
+            return dtoUser;
         }
     }
+}
 

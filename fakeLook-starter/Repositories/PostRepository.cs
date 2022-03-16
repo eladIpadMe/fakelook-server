@@ -26,9 +26,10 @@ namespace fakeLook_starter.Repositories
             return res.Entity;
         }
 
-        public async Task<Post> Delete(Post item)
+        public async Task<Post> Delete(int id)
         {
-            var res = _context.Posts.Remove(item);
+            var post = GetById(id);
+            var res = _context.Posts.Remove(post);
             await _context.SaveChangesAsync();
             return res.Entity;
         }
@@ -57,12 +58,35 @@ namespace fakeLook_starter.Repositories
 
         public Post GetById(int id)
         {
-            return _context.Posts.SingleOrDefault(p => p.Id == id);
+            var post = _context.Posts
+                .Include(p => p.Likes)
+                .Include(p => p.Tags)
+                .Include(p => p.UserTaggedPost)
+                .ThenInclude(u => u.User)
+                .Include(p => p.User)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.User)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.Tags)
+                .Select(DtoLogic)
+                .SingleOrDefault(p => p.Id == id);
+
+            return post;
         }
 
         public ICollection<Post> GetByPredicate(Func<Post, bool> predicate)
         {
-            return _context.Posts.Where(predicate).ToList();
+            return _context.Posts
+                .Include(p => p.Likes)
+                .Include(p => p.Tags)
+                .Include(p => p.UserTaggedPost)
+                .ThenInclude(u => u.User)
+                .Include(p => p.User)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.User)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.Tags)
+                .Select(DtoLogic).Where(predicate).ToList();
         }
 
         private Post DtoLogic(Post post)

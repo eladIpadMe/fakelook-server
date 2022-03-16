@@ -12,7 +12,7 @@ namespace fakeLook_starter.Interfaces
         public ICollection<T> GetAll();
         public Task<T> Edit(T item);
 
-        public Task<T> Delete(T item);
+        public Task<T> Delete(int id);
         public T GetById(int id);
         public ICollection<T> GetByPredicate(Func<T, bool> predicate);
         

@@ -23,9 +23,10 @@ namespace fakeLook_starter.Repositories
             return res.Entity;
         }
 
-        public async Task<Group> Delete(Group item)
+        public async Task<Group> Delete(int id)
         {
-            var res = _context.Groups.Remove(item);
+            var group = GetById(id);
+            var res = _context.Groups.Remove(group);
             await _context.SaveChangesAsync();
             return res.Entity;
         }

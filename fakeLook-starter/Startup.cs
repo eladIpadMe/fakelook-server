@@ -106,7 +106,9 @@ namespace fakeLook_starter
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext data)
         {
-            //data.Database.EnsureCreated();
+            data.Database.EnsureCreated();
+            data.Database.EnsureDeleted();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
