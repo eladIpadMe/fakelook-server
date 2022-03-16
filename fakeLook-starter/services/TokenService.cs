@@ -1,5 +1,5 @@
-﻿using auth_example.Interfaces;
-using fakeLook_models.Models;
+﻿using fakeLook_models.Models;
+using fakeLook_starter.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -10,14 +10,11 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace auth_example.Services
+namespace fakeLook_starter.Services
 {
     public class TokenService : ITokenService
     {
-
-
         private IConfiguration _config;
-
 
         public TokenService(IConfiguration config)
         {
