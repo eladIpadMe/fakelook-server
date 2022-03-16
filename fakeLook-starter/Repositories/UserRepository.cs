@@ -10,8 +10,6 @@ namespace fakeLook_starter.Repositories
 {
     public class UserRepository : IUserRepository
     {
-
-        
             readonly private DataContext _context;
 
         public UserRepository(DataContext context)
@@ -27,7 +25,6 @@ namespace fakeLook_starter.Repositories
                 var res = _context.Users.Add(item);
                 await _context.SaveChangesAsync();
                 return res.Entity;
-
             }
             else
             {
