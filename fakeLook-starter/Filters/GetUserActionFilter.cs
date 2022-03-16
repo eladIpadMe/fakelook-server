@@ -1,5 +1,4 @@
-﻿using auth_example.Interfaces;
-using fakeLook_models.Models;
+﻿using fakeLook_models.Models;
 using fakeLook_starter.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Linq;

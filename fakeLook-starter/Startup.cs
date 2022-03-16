@@ -17,8 +17,6 @@ using System.Text;
 using System.Threading.Tasks;
 using fakeLook_starter.Interfaces;
 using fakeLook_starter.Repositories;
-using auth_example.Interfaces;
-using auth_example.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -67,6 +65,7 @@ namespace fakeLook_starter
 
             services.AddControllers();
             #region Setting repository and services interfaces
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IGroupRepository, GroupRepository>();
