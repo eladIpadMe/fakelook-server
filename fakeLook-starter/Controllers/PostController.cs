@@ -1,6 +1,8 @@
 ﻿using fakeLook_models.Models;
+using fakeLook_starter.Filters;
 using fakeLook_starter.Interfaces;
 using fakeLook_starter.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -36,6 +38,9 @@ namespace fakeLook_starter.Controllers
 
         // POST api/<PostController>
         [HttpPost]
+        [Route("Post")]
+        //[Authorize]
+        //[TypeFilter(typeof(GetUserActionFilter))]
         public async Task<ActionResult<Post>> Post([FromBody] Post post)
         {
             return await _repository.Add(post);

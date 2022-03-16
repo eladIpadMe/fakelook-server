@@ -1,5 +1,4 @@
-﻿using auth_example.Interfaces;
-using fakeLook_models.Models;
+﻿using fakeLook_models.Models;
 using fakeLook_starter.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace auth_example.Controllers
+namespace fakeLook_starter.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
