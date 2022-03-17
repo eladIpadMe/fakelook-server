@@ -85,6 +85,7 @@ namespace fakeLook_starter.Repositories
         {
             return _context.Posts
                 .Include(p => p.Likes)
+                .ThenInclude(l => l.User)
                 .Include(p => p.Tags)
                 .Include(p => p.UserTaggedPost)
                 .ThenInclude(u => u.User)
@@ -125,6 +126,7 @@ namespace fakeLook_starter.Repositories
             dtoPost.Likes = post.Likes.Count > 0 ? post.Likes.Select(l =>
             {
                 var dtoLike = _converter.DtoLike(l);
+                dtoLike.User = _converter.DtoUser(l.User);
                 return dtoLike;
             }).ToArray(): new List<Like>(); 
 
