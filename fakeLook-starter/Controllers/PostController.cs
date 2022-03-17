@@ -4,6 +4,7 @@ using fakeLook_starter.Interfaces;
 using fakeLook_starter.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -33,7 +34,16 @@ namespace fakeLook_starter.Controllers
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
+            try
+            {
             return new JsonResult(_repository.GetById(id));
+
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(ex.Message);
+                throw;
+            }
         }
 
         // POST api/<PostController>
@@ -55,9 +65,9 @@ namespace fakeLook_starter.Controllers
 
         // DELETE api/<PostController>/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Post>> Delete(Post post)
+        public async Task<ActionResult<Post>> Delete(int id)
         {
-            return await _repository.Delete(post);
+            return await _repository.Delete(id);
         }
     }
 }

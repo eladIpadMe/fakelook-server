@@ -12,9 +12,9 @@ namespace fakeLook_starter.Repositories
     public class UserRepository : IUserRepository
     {
             readonly private DataContext _context;
-            readonly private DtoConverter _converter;
+            readonly private IDtoConverter _converter;
 
-        public UserRepository(DataContext context, DtoConverter converter)
+        public UserRepository(DataContext context, IDtoConverter converter)
         {
             _context = context;
             _converter = converter;
@@ -44,29 +44,32 @@ namespace fakeLook_starter.Repositories
         }
 
         public async Task<User> Edit(User item)
-            {
+        {
             var res = _context.Users.Update(item);
             await _context.SaveChangesAsync();
             return res.Entity;
         }
 
-            public ICollection<User> GetAll()
-            {
-
+        public ICollection<User> GetAll()
+        {
             return _context.Users
                 .Select(DtoLogic)
                 .ToList();
-            }
+        }
 
-            public User GetById(int id)
+        public User GetById(int id)
             {
-            return _context.Users.Select(DtoLogic).SingleOrDefault(u => u.Id == id);
-    
-            }
+            //return _context.Users.Select(DtoLogic).SingleOrDefault(u => u.Id == id);
+            return _context.Users
+                .Select(DtoLogic)
+                .SingleOrDefault(u => u.Id == id);
+        }
 
             public ICollection<User> GetByPredicate(Func<User, bool> predicate)
             {
-                return _context.Users.Where(predicate).ToList();
+                return _context.Users
+                .Select(DtoLogic)
+                .Where(predicate).ToList();
             }
 
             public User findItem(User item)

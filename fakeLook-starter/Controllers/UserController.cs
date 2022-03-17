@@ -12,8 +12,6 @@ namespace fakeLook_starter.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-
-
         private readonly IUserRepository  _repository;
 
         public UserController(IUserRepository repository)
@@ -56,10 +54,6 @@ namespace fakeLook_starter.Controllers
         {
             return await _repository.Delete(id);
         }
-
-
-
-
     }
     
     //private readonly IRepository<Person> _repository;

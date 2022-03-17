@@ -31,7 +31,7 @@ namespace fakeLook_models.Models
 
         public User DtoUser(User user)
         {
-            return new User() { Id = user.Id, FirstName = user.FirstName, LastName = user.LastName, UserName = user.UserName, Address = user.Address};
+            return new User() { Id = user.Id , FirstName = user.FirstName, LastName = user.LastName};
         }
 
         public UserTaggedComment DtoUserTaggedComment(UserTaggedComment userTaggedComment)

@@ -25,11 +25,11 @@ namespace fakeLook_dal.Data
         {
             #region Model Mapping
             //users
-            modelBuilder.Entity<User>().HasMany(u => u.Comments).WithOne(c => c.User).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<User>().HasMany(u => u.Posts).WithOne(p => p.User).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<User>().HasMany(u => u.Likes).WithOne(l => l.User).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<User>().HasMany(u => u.UserTaggedComment).WithOne(utc => utc.User).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<User>().HasMany(u => u.UserTaggedPost).WithOne(utp => utp.User).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<User>().HasMany(u => u.Comments).WithOne(c => c.User).OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<User>().HasMany(u => u.Posts).WithOne(p => p.User).OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<User>().HasMany(u => u.Likes).WithOne(l => l.User).OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<User>().HasMany(u => u.UserTaggedComment).WithOne(utc => utc.User).OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<User>().HasMany(u => u.UserTaggedPost).WithOne(utp => utp.User).OnDelete(DeleteBehavior.ClientCascade);
             ;
             //posts
             modelBuilder.Entity<Post>().HasMany(p => p.Likes).WithOne(l => l.Post).OnDelete(DeleteBehavior.Cascade);
@@ -58,7 +58,7 @@ namespace fakeLook_dal.Data
             {
                 var name = "user ";
                 var address = "some adress";
-                var password = "12345".GetHashCode().ToString();
+                var password = "12345";//.GetHashCode().ToString();
                 var users = new User[amount];
                 for (int i = 0; i < amount; i++)
                 {

@@ -52,9 +52,9 @@ namespace fakeLook_starter.Controllers
 
         // DELETE api/<GroupController>/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Group>> Delete(Group group)
+        public async Task<ActionResult<Group>> Delete(int id)
         {
-            return await _repository.Delete(group);
+            return await _repository.Delete(id);
 
         }
     }

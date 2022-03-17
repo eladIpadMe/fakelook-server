@@ -17,18 +17,38 @@ namespace fakeLook_starter.Interfaces
         public ICollection<T> GetByPredicate(Func<T, bool> predicate);
         
     }
-    public interface IUserRepository : IRepository<User>
+    public interface ICommentRepository : IRepository<Comment>
     {
-        public User findItem(User item);
-    }
-    public interface IPostRepository : IRepository<Post>
-    {
-           
-    }
 
+    }
     public interface IGroupRepository : IRepository<Group>
     {
 
     }
+    public interface ILikeRepository : IRepository<Like>
+    {
+
+    }
+    public interface IPostRepository : IRepository<Post>
+    {
+
+    }
+    public interface ITagRepository : IRepository<Tag>
+    {
+
+    }
+    public interface IUserRepository : IRepository<User>
+    {
+        public User findItem(User item);
+    }
+    public interface IUserTaggedCommentRepository : IRepository<UserTaggedComment>
+    {
+
+    }
+    public interface IUserTaggedPostRepository : IRepository<UserTaggedPost>
+    {
+
+    }
+
 
 }
