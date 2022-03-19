@@ -29,7 +29,6 @@ namespace fakeLook_models.Models
         public virtual ICollection<Like> Likes { get; set; }
         public virtual ICollection<UserTaggedPost> UserTaggedPost { get; set; }
         public virtual ICollection<UserTaggedComment> UserTaggedComment { get; set; }
-
         public virtual ICollection<Group> UserGroups { get; set; }
 
     }

@@ -1,6 +1,7 @@
 ﻿using fakeLook_dal.Data;
 using fakeLook_models.Models;
 using fakeLook_starter.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace fakeLook_starter.Repositories
     public class UserRepository : IUserRepository
     {
             readonly private DataContext _context;
+            readonly private IDtoConverter _converter;
 
-        public UserRepository(DataContext context)
+        public UserRepository(DataContext context, IDtoConverter converter)
         {
             _context = context;
+            _converter = converter;
         }
         public async Task<User> Add(User item)
         {
@@ -32,33 +35,41 @@ namespace fakeLook_starter.Repositories
             }
         }
 
-        public async Task<User> Delete(User item)
+        public async Task<User> Delete(int id)
         {
-            var res = _context.Users.Remove(item);
+            var user = GetById(id);
+            var res = _context.Users.Remove(user);
             await _context.SaveChangesAsync();
             return res.Entity;
         }
 
         public async Task<User> Edit(User item)
-            {
+        {
             var res = _context.Users.Update(item);
             await _context.SaveChangesAsync();
             return res.Entity;
         }
 
-            public ICollection<User> GetAll()
-            {
-            return _context.Users.ToList();
-            }
+        public ICollection<User> GetAll()
+        {
+            return _context.Users
+                .Select(DtoLogic)
+                .ToList();
+        }
 
-            public User GetById(int id)
+        public User GetById(int id)
             {
-                return _context.Users.SingleOrDefault(u => u.Id == id);
-            }
+            //return _context.Users.Select(DtoLogic).SingleOrDefault(u => u.Id == id);
+            return _context.Users
+                .Select(DtoLogic)
+                .SingleOrDefault(u => u.Id == id);
+        }
 
             public ICollection<User> GetByPredicate(Func<User, bool> predicate)
             {
-                return _context.Users.Where(predicate).ToList();
+                return _context.Users
+                .Select(DtoLogic)
+                .Where(predicate).ToList();
             }
 
             public User findItem(User item)
@@ -66,6 +77,12 @@ namespace fakeLook_starter.Repositories
             //item.Password = item.Password.GetHashCode().ToString();
             return _context.Users.Where(user => user.UserName == item.UserName && user.Password == item.Password).SingleOrDefault();
             }
+
+        private User DtoLogic(User user)
+        {
+            var dtoUser = _converter.DtoUser(user);
+            return dtoUser;
         }
     }
+}
 

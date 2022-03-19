@@ -12,8 +12,6 @@ namespace fakeLook_starter.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-
-
         private readonly IUserRepository  _repository;
 
         public UserController(IUserRepository repository)
@@ -52,16 +50,12 @@ namespace fakeLook_starter.Controllers
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> Delete(User user)
+        public async Task<ActionResult<User>> Delete(int id)
         {
-            return await _repository.Delete(user);
+            return await _repository.Delete(id);
         }
-
-
-
-
     }
-
+    
     //private readonly IRepository<Person> _repository;
 
     //public UsersController(IRepository<Person> repository)

@@ -25,6 +25,7 @@ using fakeLook_starter.Filters;
 using Microsoft.AspNetCore.Mvc.Filters;
 using fakeLook_models.Models;
 using fakeLook_starter.Services;
+using System.Text.Json.Serialization;
 
 namespace fakeLook_starter
 {
@@ -41,7 +42,10 @@ namespace fakeLook_starter
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            });
             #region Configure jwt Auth
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
               .AddJwtBearer(options =>
@@ -59,8 +63,10 @@ namespace fakeLook_starter
               });
             #endregion
             //to add what i talked with yaniv about token
-
+         
             services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<IDtoConverter, DtoConverter>();
+            services.AddScoped<IDtoConverter, DtoConverter>();
             //services.AddSingleton<IRepository<User>, UserRepository>();
 
             services.AddControllers();
@@ -68,17 +74,24 @@ namespace fakeLook_starter
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ILikeRepository, LikeRepository>();
+            services.AddTransient<ICommentRepository, CommentRepository>();
             services.AddTransient<IGroupRepository, GroupRepository>();
-
-            services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<ITagRepository, TagRepository>();
+            services.AddTransient<IUserTaggedCommentRepository, UserTaggedCommentRepository>();
+            services.AddTransient<IUserTaggedPostRepository, UserTaggedPostRepository>();
 
             #endregion
             #region Setting DB configuration
-       
+            //services.AddScoped<IDtoConverter, DtoConverter>();
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IUserRepository,UserRepository>();
+            services.AddScoped<ILikeRepository, LikeRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
-
+            services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IUserTaggedCommentRepository, UserTaggedCommentRepository>();
+            services.AddScoped<IUserTaggedPostRepository, UserTaggedPostRepository>();
             services.AddScoped<ITokenService, TokenService>();
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
@@ -102,7 +115,9 @@ namespace fakeLook_starter
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext data)
         {
-            //data.Database.EnsureCreated();
+            //data.Database.EnsureDeleted();
+            data.Database.EnsureCreated();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

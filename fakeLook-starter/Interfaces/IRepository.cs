@@ -12,23 +12,43 @@ namespace fakeLook_starter.Interfaces
         public ICollection<T> GetAll();
         public Task<T> Edit(T item);
 
-        public Task<T> Delete(T item);
+        public Task<T> Delete(int id);
         public T GetById(int id);
         public ICollection<T> GetByPredicate(Func<T, bool> predicate);
         
+    }
+    public interface ICommentRepository : IRepository<Comment>
+    {
+
+    }
+    public interface IGroupRepository : IRepository<Group>
+    {
+
+    }
+    public interface ILikeRepository : IRepository<Like>
+    {
+
+    }
+    public interface IPostRepository : IRepository<Post>
+    {
+
+    }
+    public interface ITagRepository : IRepository<Tag>
+    {
+
     }
     public interface IUserRepository : IRepository<User>
     {
         public User findItem(User item);
     }
-    public interface IPostRepository : IRepository<Post>
-    {
-           
-    }
-
-    public interface IGroupRepository : IRepository<Group>
+    public interface IUserTaggedCommentRepository : IRepository<UserTaggedComment>
     {
 
     }
+    public interface IUserTaggedPostRepository : IRepository<UserTaggedPost>
+    {
+
+    }
+
 
 }
