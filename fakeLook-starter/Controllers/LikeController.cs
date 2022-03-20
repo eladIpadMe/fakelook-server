@@ -1,4 +1,5 @@
 ﻿using fakeLook_models.Models;
+using fakeLook_starter.Filters;
 using fakeLook_starter.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace fakeLook_starter.Controllers
         }
         // GET api/<LikeController>
         [HttpGet]
+
         public IEnumerable<Like> Get()
         {
             return _repository.GetAll();
@@ -32,6 +34,7 @@ namespace fakeLook_starter.Controllers
 
         // POST api/<LikeController>
         [HttpPost]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public async Task<ActionResult<Like>> Post([FromBody] Like like)
         {
             return await _repository.Add(like);

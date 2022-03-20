@@ -25,6 +25,7 @@ namespace fakeLook_starter.Controllers
         }
         // GET: api/<PostController>
         [HttpGet]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public IEnumerable<Post> Get()
         {
             return _repository.GetAll();
@@ -32,6 +33,7 @@ namespace fakeLook_starter.Controllers
 
         // GET api/<PostController>/5
         [HttpGet("{id}")]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public JsonResult Get(int id)
         {
             try
@@ -49,6 +51,7 @@ namespace fakeLook_starter.Controllers
         // POST api/<PostController>
         [HttpPost]
         [Route("Post")]
+        [TypeFilter(typeof(GetUserActionFilter))]
         //[Authorize]
         //[TypeFilter(typeof(GetUserActionFilter))]
         public async Task<ActionResult<Post>> Post([FromBody] Post post)
@@ -58,6 +61,7 @@ namespace fakeLook_starter.Controllers
 
         // PUT api/<PostController>/5
         [HttpPut("{id}")]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public async Task<ActionResult<Post>> Put(int id, [FromBody] Post post)
         {
             return await _repository.Edit(post);
@@ -65,6 +69,7 @@ namespace fakeLook_starter.Controllers
 
         // DELETE api/<PostController>/5
         [HttpDelete("{id}")]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public async Task<ActionResult<Post>> Delete(int id)
         {
             return await _repository.Delete(id);
