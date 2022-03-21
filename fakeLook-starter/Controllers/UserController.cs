@@ -39,7 +39,6 @@ namespace fakeLook_starter.Controllers
 
         // POST api/<UserController>
         [HttpPost]
-        [TypeFilter(typeof(GetUserActionFilter))]
         public async Task<ActionResult<User>> Post([FromBody] User user)
         {
             return await _repository.Add(user);
@@ -55,7 +54,6 @@ namespace fakeLook_starter.Controllers
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        [TypeFilter(typeof(GetUserActionFilter))]
         public async Task<ActionResult<User>> Delete(int id)
         {
             return await _repository.Delete(id);

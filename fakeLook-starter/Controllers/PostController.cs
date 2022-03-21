@@ -69,10 +69,34 @@ namespace fakeLook_starter.Controllers
 
         // DELETE api/<PostController>/5
         [HttpDelete("{id}")]
-        [TypeFilter(typeof(GetUserActionFilter))]
+        //[TypeFilter(typeof(GetUserActionFilter))]
         public async Task<ActionResult<Post>> Delete(int id)
         {
             return await _repository.Delete(id);
+        }
+
+        [HttpPost]
+        [Route("Filter")]
+        public async Task<Post> Filter(PostFilter filter)
+        {
+            var res = _repository.GetByPredicate(post =>
+            {
+                
+                bool taggs = filter.checkHashTaggs(post.Tags, filter.hashtags);
+                bool taggedUsers = filter.checkUsersTagged(post.UserTaggedPost, filter.taggedUsers);
+                bool publishers = filter.checkPublishers(_repository.GetUsernameById(post.UserId), filter.Publishers);
+                bool date = filter.checkDate(post.Date, filter.startingDate, filter.endingDate);
+                return date && publishers && taggedUsers && taggedUsers;
+            });
+            return null;
+        }
+
+        [HttpPost]
+        [Route("ManageLike")]
+        //[TypeFilter(typeof(GetUserActionFilter))]
+        public void ManageLike(Like like)
+        {
+            _repository.ManageLike(like.UserId, like.PostId);
         }
     }
 }

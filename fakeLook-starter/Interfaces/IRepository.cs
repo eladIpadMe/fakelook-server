@@ -31,7 +31,8 @@ namespace fakeLook_starter.Interfaces
     }
     public interface IPostRepository : IRepository<Post>
     {
-
+        public string GetUsernameById(int userId);
+        public void ManageLike(int userId, int postId);
     }
     public interface ITagRepository : IRepository<Tag>
     {

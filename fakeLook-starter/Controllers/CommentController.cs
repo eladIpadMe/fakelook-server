@@ -20,6 +20,7 @@ namespace fakeLook_starter.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public IEnumerable<Comment> Get()
         {
             return _repository.GetAll();
@@ -27,6 +28,7 @@ namespace fakeLook_starter.Controllers
 
         // GET api/<CommentController>/5
         [HttpGet("{id}")]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public JsonResult Get(int id)
         {
             return new JsonResult(_repository.GetById(id));

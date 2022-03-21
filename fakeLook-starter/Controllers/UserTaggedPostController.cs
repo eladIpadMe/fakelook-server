@@ -1,4 +1,5 @@
 ﻿using fakeLook_models.Models;
+using fakeLook_starter.Filters;
 using fakeLook_starter.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace fakeLook_starter.Controllers
         }
         // GET: api/<UserTaggedPostController>
         [HttpGet]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public IEnumerable<UserTaggedPost> Get()
         {
             return _repository.GetAll();
@@ -25,6 +27,7 @@ namespace fakeLook_starter.Controllers
 
         // GET api/<UserTaggedPostController>/5
         [HttpGet("{id}")]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public JsonResult Get(int id)
         {
             return new JsonResult(_repository.GetById(id));
@@ -32,6 +35,7 @@ namespace fakeLook_starter.Controllers
 
         // POST api/<UserTaggedPostController>
         [HttpPost]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public async Task<ActionResult<UserTaggedPost>> Post([FromBody] UserTaggedPost userTaggedPost)
         {
             return await _repository.Add(userTaggedPost);

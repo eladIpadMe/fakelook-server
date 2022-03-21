@@ -42,6 +42,7 @@ namespace fakeLook_starter.Controllers
 
         // PUT api/<LikeController>/5
         [HttpPut("{id}")]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public async Task<ActionResult<Like>> Put(int id, [FromBody] Like like)
         {
             return await _repository.Edit(like);

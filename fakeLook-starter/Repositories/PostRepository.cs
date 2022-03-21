@@ -43,20 +43,6 @@ namespace fakeLook_starter.Repositories
 
         public ICollection<Post> GetAll()
         {
-            //ICollection < Post > posts = _context.Posts
-            //    .Include(p => p.Likes)
-            //    .Include(p => p.Tags)
-            //    .Include(p => p.UserTaggedPost)
-            //    .ThenInclude(u => u.User)
-            //    .Include(p => p.User)
-            //    .Include(p => p.Comments)
-            //    .ThenInclude(c => c.UserTaggedComment)
-            //    .Include(p => p.Comments)
-            //    .ThenInclude(c => c.User)
-            //    .Include(p => p.Comments)
-            //    .ThenInclude(c => c.Tags)
-            //    .Select(DtoLogic).ToList();
-
             return _context.Posts
                 .Include(p => p.Likes)
                 .Include(p => p.Tags)
@@ -73,24 +59,8 @@ namespace fakeLook_starter.Repositories
                 .ToList();
         }
            
-
         public Post GetById(int id)
         {
-        //    var post = _context.Posts
-        //    .Include(p => p.Likes)
-        //    .Include(p => p.Tags)
-        //    .Include(p => p.UserTaggedPost)
-        //    .ThenInclude(u => u.User)
-        //    .Include(p => p.User)
-        //    .Include(p => p.Comments)
-        //    .ThenInclude(c => c.User)
-        //    .Include(p => p.Comments)
-        //    .ThenInclude(c => c.Tags)
-        //    .Include(p => p.Comments)
-        //    .ThenInclude(c => c.UserTaggedComment)
-        //    .Select(DtoLogic)
-        //    .SingleOrDefault(p => p.Id == id);
-
             return _context.Posts
                     .Include(p => p.Likes)
                     .Include(p => p.Tags)
@@ -108,20 +78,6 @@ namespace fakeLook_starter.Repositories
 
         public ICollection<Post> GetByPredicate(Func<Post, bool> predicate)
         {
-            //return _context.Posts
-            //    .Include(p => p.Likes)
-            //    .ThenInclude(l => l.User)
-            //    .Include(p => p.Tags)
-            //    .Include(p => p.UserTaggedPost)
-            //    .ThenInclude(u => u.User)
-            //    .Include(p => p.User)
-            //    .Include(p => p.Comments)
-            //    .ThenInclude(c => c.User)
-            //    .Include(p => p.Comments)
-            //    .ThenInclude(c => c.Tags)
-            //    .Include(p => p.Comments)
-            //    .ThenInclude(c => c.UserTaggedComment)
-            //    .Select(DtoLogic).Where(predicate).ToList();
             return _context.Posts
                 .Include(p => p.Likes)
                 .ThenInclude(l => l.User)
@@ -138,7 +94,32 @@ namespace fakeLook_starter.Repositories
                 .Where(predicate)
                 .ToList();
         }
+        public string GetUsernameById(int userId)
+        {
+            var post = _context.Posts.SingleOrDefault(p => p.UserId == userId);
+            return post.User.UserName;
+                
+        }
 
+        public void ManageLike(int userId, int postId)
+        {
+            var post = GetById(postId);
+            var like = post.Likes.SingleOrDefault(l => l.UserId == userId);
+            if(like == null)
+            {
+                post.Likes.Append(new Like() {
+                    IsActive = true,
+                    UserId = post.UserId,
+                    PostId = post.Id}
+                );
+            }
+            else
+            {
+                _context.Posts.SingleOrDefault(p => p.Id == postId).
+                    Likes.SingleOrDefault(l => l.UserId == userId)
+                    .IsActive = !like.IsActive;
+            }
+        }
         private Post DtoLogic(Post post)
         {
             var dtoPost = _converter.DtoPost(post);
