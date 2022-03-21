@@ -1,4 +1,5 @@
 ﻿using fakeLook_models.Models;
+using fakeLook_starter.Filters;
 using fakeLook_starter.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace fakeLook_starter.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public IEnumerable<Comment> Get()
         {
             return _repository.GetAll();
@@ -26,6 +28,7 @@ namespace fakeLook_starter.Controllers
 
         // GET api/<CommentController>/5
         [HttpGet("{id}")]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public JsonResult Get(int id)
         {
             return new JsonResult(_repository.GetById(id));
@@ -33,6 +36,7 @@ namespace fakeLook_starter.Controllers
 
         // POST api/<CommentController>
         [HttpPost]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public async Task<ActionResult<Comment>> Post([FromBody] Comment comment)
         {
             return await _repository.Add(comment);

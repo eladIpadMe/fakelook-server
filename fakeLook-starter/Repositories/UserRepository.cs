@@ -12,12 +12,12 @@ namespace fakeLook_starter.Repositories
     public class UserRepository : IUserRepository
     {
             readonly private DataContext _context;
-            readonly private IDtoConverter _converter;
+            //readonly private IDtoConverter _converter;
 
-        public UserRepository(DataContext context, IDtoConverter converter)
+        public UserRepository(DataContext context)//, IDtoConverter converter)
         {
             _context = context;
-            _converter = converter;
+            //_converter = converter;
         }
         public async Task<User> Add(User item)
         {
@@ -52,24 +52,27 @@ namespace fakeLook_starter.Repositories
 
         public ICollection<User> GetAll()
         {
-            return _context.Users
-                .Select(DtoLogic)
-                .ToList();
+            //return _context.Users
+            //    .Select(DtoLogic)
+            //    .ToList();
+            return _context.Users.ToList();
         }
 
         public User GetById(int id)
             {
             //return _context.Users.Select(DtoLogic).SingleOrDefault(u => u.Id == id);
-            return _context.Users
-                .Select(DtoLogic)
-                .SingleOrDefault(u => u.Id == id);
+            //return _context.Users
+            //    .Select(DtoLogic)
+            //    .SingleOrDefault(u => u.Id == id);
+            return _context.Users.SingleOrDefault(user => user.Id == id);
         }
 
             public ICollection<User> GetByPredicate(Func<User, bool> predicate)
             {
-                return _context.Users
-                .Select(DtoLogic)
-                .Where(predicate).ToList();
+                //return _context.Users
+                //.Select(DtoLogic)
+                //.Where(predicate).ToList();
+            return _context.Users.Where(predicate).ToList();
             }
 
             public User findItem(User item)
@@ -78,11 +81,48 @@ namespace fakeLook_starter.Repositories
             return _context.Users.Where(user => user.UserName == item.UserName && user.Password == item.Password).SingleOrDefault();
             }
 
-        private User DtoLogic(User user)
-        {
-            var dtoUser = _converter.DtoUser(user);
-            return dtoUser;
-        }
+    //    private User DtoLogic(User user)
+    //    {
+    //        var dtoUser = _converter.DtoUser(user);
+    //        dtoUser.Comments = user.Comments.Count > 0 ? user.Comments.Select(c =>
+    //        {
+    //            var dtoComment = _converter.DtoComment(c);
+    //            //dtoComment.User = _converter.DtoUser(c.User);
+    //            dtoComment.Post = _converter.DtoPost(c.Post);
+    //            dtoComment.Tags = c.Tags.Count > 0 ? c.Tags.Select(t =>
+    //             {
+    //                 var dtoTag = _converter.DtoTag(t);
+    //                 return dtoTag;
+    //             }).ToArray() : new List<Tag>();
+
+    //            dtoComment.UserTaggedComment = c.UserTaggedComment.Count > 0 ? c.UserTaggedComment.Select(ut =>
+    //            {
+    //                return _converter.DtoUserTaggedComment(ut);
+    //            }).ToArray() : new List<UserTaggedComment>();
+
+    //            return dtoComment;
+    //        }).ToArray() : new List<Comment>();
+    //        dtoUser.Posts = user.Posts.Count > 0 ? user.Posts.Select(p =>
+    //        {
+    //            var dtoPost = _converter.DtoPost(p);
+    //            dtoPost.Likes = p.Likes.Count > 0 ? p.Likes.Select(l =>
+    //            {
+    //                var dtoLike = _converter.DtoLike(l);
+    //                dtoLike.User = _converter.DtoUser(l.User);
+    //                return dtoLike;
+    //            }).ToList() : new List<Like>();
+    //            dtoPost.Comments = p.Comments.Count > 0 ? p.Comments.Select(c =>
+    //            {
+    //                var dtoComment = _converter.DtoComment(c);
+    //                dtoComment.User = _converter.DtoUser(c.User);
+
+    //            })
+    //        })
+
+    //        return dtoUser;
+    //    }
     }
+
+
 }
 

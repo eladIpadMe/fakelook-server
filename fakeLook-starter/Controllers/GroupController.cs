@@ -1,4 +1,5 @@
 ﻿using fakeLook_models.Models;
+using fakeLook_starter.Filters;
 using fakeLook_starter.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace fakeLook_starter.Controllers
         }
         // GET: api/<GroupController>
         [HttpGet]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public IEnumerable<Group> Get()
         {
             return  _repository.GetAll();
@@ -28,6 +30,7 @@ namespace fakeLook_starter.Controllers
 
         // GET api/<GroupController>/5
         [HttpGet("{id}")]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public JsonResult Get(int id)
         {
             return new JsonResult(_repository.GetById(id));
@@ -35,6 +38,7 @@ namespace fakeLook_starter.Controllers
 
         // POST api/<GroupController>
         [HttpPost]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public async Task<ActionResult<Group>> Post([FromBody] Group group)
         {
             return await _repository.Add(group);
