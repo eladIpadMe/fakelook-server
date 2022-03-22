@@ -21,7 +21,7 @@ namespace fakeLook_starter.Controllers
 
         // GET: api/<TagController>
         [HttpGet]
-        [TypeFilter(typeof(GetUserActionFilter))]
+        //[TypeFilter(typeof(GetUserActionFilter))]
         public IEnumerable<Tag> Get()
         {
             return _repository.GetAll();
@@ -29,7 +29,7 @@ namespace fakeLook_starter.Controllers
 
         // GET api/<TagController>/5
         [HttpGet("{id}")]
-        [TypeFilter(typeof(GetUserActionFilter))]
+        //[TypeFilter(typeof(GetUserActionFilter))]
         public JsonResult Get(int id)
         {
             return new JsonResult(_repository.GetById(id));
@@ -37,7 +37,7 @@ namespace fakeLook_starter.Controllers
 
         // POST api/<TagController>
         [HttpPost]
-        [TypeFilter(typeof(GetUserActionFilter))]
+        //[TypeFilter(typeof(GetUserActionFilter))]
         public async Task<ActionResult<Tag>> Post([FromBody] Tag tag)
         {
             return await _repository.Add(tag);

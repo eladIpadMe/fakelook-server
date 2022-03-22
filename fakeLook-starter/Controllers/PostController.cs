@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -25,7 +26,7 @@ namespace fakeLook_starter.Controllers
         }
         // GET: api/<PostController>
         [HttpGet]
-        [TypeFilter(typeof(GetUserActionFilter))]
+        //[TypeFilter(typeof(GetUserActionFilter))]
         public IEnumerable<Post> Get()
         {
             return _repository.GetAll();
@@ -33,7 +34,7 @@ namespace fakeLook_starter.Controllers
 
         // GET api/<PostController>/5
         [HttpGet("{id}")]
-        [TypeFilter(typeof(GetUserActionFilter))]
+        //[TypeFilter(typeof(GetUserActionFilter))]
         public JsonResult Get(int id)
         {
             try
@@ -51,7 +52,7 @@ namespace fakeLook_starter.Controllers
         // POST api/<PostController>
         [HttpPost]
         [Route("Post")]
-        [TypeFilter(typeof(GetUserActionFilter))]
+        //[TypeFilter(typeof(GetUserActionFilter))]
         //[Authorize]
         //[TypeFilter(typeof(GetUserActionFilter))]
         public async Task<ActionResult<Post>> Post([FromBody] Post post)
@@ -61,7 +62,7 @@ namespace fakeLook_starter.Controllers
 
         // PUT api/<PostController>/5
         [HttpPut("{id}")]
-        [TypeFilter(typeof(GetUserActionFilter))]
+       // [TypeFilter(typeof(GetUserActionFilter))]
         public async Task<ActionResult<Post>> Put(int id, [FromBody] Post post)
         {
             return await _repository.Edit(post);
@@ -77,18 +78,21 @@ namespace fakeLook_starter.Controllers
 
         [HttpPost]
         [Route("Filter")]
-        public async Task<Post> Filter(PostFilter filter)
+        public ICollection<Post> Filter([FromBody] PostFilter filter)
         {
             var res = _repository.GetByPredicate(post =>
             {
-                
+                string dateNew = post.Date.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                DateTime daten = Convert.ToDateTime(dateNew);
+                string userName = _repository.GetUsernameById(post.UserId);
                 bool taggs = filter.checkHashTaggs(post.Tags, filter.hashtags);
                 bool taggedUsers = filter.checkUsersTagged(post.UserTaggedPost, filter.taggedUsers);
-                bool publishers = filter.checkPublishers(_repository.GetUsernameById(post.UserId), filter.Publishers);
-                bool date = filter.checkDate(post.Date, filter.startingDate, filter.endingDate);
-                return date && publishers && taggedUsers && taggedUsers;
+                bool publishers = filter.checkPublishers(userName, filter.Publishers);
+                bool date = filter.checkDate(daten, filter.startingDate, filter.endingDate);
+                var final = date && publishers && taggedUsers && taggs;
+                return date && publishers && taggedUsers && taggs;
             });
-            return null;
+            return res;
         }
 
         [HttpPost]

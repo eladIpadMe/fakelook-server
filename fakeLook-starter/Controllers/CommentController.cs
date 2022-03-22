@@ -55,10 +55,5 @@ namespace fakeLook_starter.Controllers
         {
             return await _repository.Delete(id);
         }
-
-
-
-
-
     }
 }

@@ -16,21 +16,23 @@ namespace fakeLook_models.Models
         public bool checkDate(DateTime postDate, Nullable<DateTime> startingDate, Nullable<DateTime> endingDate)
         {
             bool date;
+            //int res;
             if (!startingDate.HasValue && !endingDate.HasValue)
             {
                 return true;
             }
             else if (!startingDate.HasValue && endingDate.HasValue)
             {
-                date = (postDate <= endingDate);
+                date = (DateTime.Compare(postDate, (DateTime)endingDate) <= 0);
             }
             else if (startingDate.HasValue && !endingDate.HasValue)
             {
-                date = (postDate <= startingDate);
+                date = (DateTime.Compare(postDate, (DateTime)startingDate) >= 0);
             }
             else
             {
-                date = (postDate >= startingDate && postDate <= endingDate);
+                date = ((DateTime.Compare(postDate, (DateTime)startingDate) >= 0) &&
+                    (DateTime.Compare(postDate, (DateTime)endingDate) <= 0));
             }
             return date;
         }
@@ -49,6 +51,10 @@ namespace fakeLook_models.Models
             {
                 return true;
             }
+            if (postTags == null || postTags.Count == 0)
+            {
+                return false;
+            }
             foreach (var filtertag in filtertaggs)
             {
                 foreach (var postTag in postTags)
@@ -64,7 +70,12 @@ namespace fakeLook_models.Models
 
         public bool checkUsersTagged(ICollection<UserTaggedPost> taggedPost, ICollection<string> taggedFilter)
         {
-            if (taggedFilter.Count == 0)
+
+            if(taggedPost == null || taggedPost.Count == 0)
+            {
+                return false;
+            }
+            if (taggedFilter == null || taggedFilter.Count == 0)
             {
                 return true;
             }

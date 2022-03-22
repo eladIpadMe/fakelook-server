@@ -73,6 +73,7 @@ namespace fakeLook_starter.Repositories
                     .ThenInclude(c => c.Tags)
                     .Include(p => p.Comments)
                     .ThenInclude(c => c.UserTaggedComment)
+                    .Select(DtoLogic)
                     .SingleOrDefault(p => p.Id == id);
         }
 
@@ -92,12 +93,15 @@ namespace fakeLook_starter.Repositories
                 .Include(p => p.Comments)
                 .ThenInclude(c => c.UserTaggedComment)
                 .Where(predicate)
+                .Select(DtoLogic)
                 .ToList();
         }
         public string GetUsernameById(int userId)
         {
-            var post = _context.Posts.SingleOrDefault(p => p.UserId == userId);
-            return post.User.UserName;
+           // var post = _context.Posts.SingleOrDefault(p => p.UserId == userId);
+            return _context.Users.SingleOrDefault(u => u.Id == userId).UserName;
+            //var likes = post.Likes;
+            //return post.User.UserName;
                 
         }
 
@@ -148,6 +152,8 @@ namespace fakeLook_starter.Repositories
             {
                 var dtoLike = _converter.DtoLike(l);
                 dtoLike.User = _converter.DtoUser(l.User);
+                dtoLike.UserId = l.UserId;
+                dtoLike.PostId = l.PostId;
                 return dtoLike;
             }).ToArray() : new List<Like>();
 

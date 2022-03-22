@@ -20,9 +20,17 @@ namespace fakeLook_starter.Repositories
 
         public async Task<Like> Add(Like item)
         {
-            var res = _context.Likes.Add(item);
-            await _context.SaveChangesAsync();
-            return res.Entity;
+            var like = _context.Likes.SingleOrDefault(l => l.UserId == item.UserId && l.PostId == item.PostId);
+            if(like == null)
+            {
+                var res = _context.Likes.Add(item);
+                await _context.SaveChangesAsync();
+                return res.Entity;
+            }
+            else
+            {
+                return like;
+            }
         }
 
         public async Task<Like> Delete(int id)
