@@ -31,7 +31,7 @@ namespace fakeLook_starter.Repositories
             }
             else
             {
-                return null;
+                return user;
             }
         }
 
