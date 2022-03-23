@@ -29,16 +29,19 @@ namespace fakeLook_starter.Repositories
             //   var currentTag = _context.Tags.FirstOrDefault(t => t.Content == item.Tags[i].Content)
             //}
             var postHashTags = new List<Tag>();
-            foreach(var tag in item.Tags)
+            if (item.Tags != null)
             {
-                var hashtag = _tagRepository.Add(tag);
-                postHashTags.Add(await hashtag);
-                //var currentTag = _context.Tags.FirstOrDefault(t => t.Content == tag.Content);
-                //if(currentTag != null)
-                //{
-                //    tag.Id = currentTag.Id;
-                //    tag.
-                //} 
+                foreach (var tag in item.Tags)
+                {
+                    var hashtag = _tagRepository.Add(tag);
+                    postHashTags.Add(await hashtag);
+                    //var currentTag = _context.Tags.FirstOrDefault(t => t.Content == tag.Content);
+                    //if(currentTag != null)
+                    //{
+                    //    tag.Id = currentTag.Id;
+                    //    tag.
+                    //} 
+                }
             }
             item.Tags = postHashTags;
             var res = _context.Posts.Add(item);
@@ -50,15 +53,30 @@ namespace fakeLook_starter.Repositories
         {
             var post = GetById(id);
             var res = _context.Posts.Remove(post);
+
             await _context.SaveChangesAsync();
             return res.Entity;
         }
 
         public async Task<Post> Edit(Post item)
         {
-            var res = _context.Posts.Update(item);
-            await _context.SaveChangesAsync();
-            return res.Entity;
+            try
+            {
+                var post =_context.Posts.FirstOrDefault(p=> p.Id == item.Id);
+                if (post == null) return null;
+                _context.Entry<Post>(post).CurrentValues.SetValues(item);
+                await _context.SaveChangesAsync();
+                return post;
+
+            //var res = _context.Posts.Update(item);
+            //await _context.SaveChangesAsync();
+            //return res.Entity;
+            }
+            catch (Exception ex)
+            {
+                return new Post { };
+            }
+
         }
 
         public ICollection<Post> GetAll()
