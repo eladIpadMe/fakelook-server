@@ -39,7 +39,7 @@ namespace fakeLook_models.Models
 
         public bool checkPublishers(string postUserName, ICollection<string> publishers)
         {
-            if (publishers == null)
+            if (publishers == null || publishers.Count == 0)
             {
                 return true;
             }
@@ -47,7 +47,7 @@ namespace fakeLook_models.Models
         }
         public bool checkHashTaggs(ICollection<Tag> postTags, ICollection<string> filtertaggs)
         {
-            if (filtertaggs == null)
+            if (filtertaggs == null || filtertaggs.Count == 0)
             {
                 return true;
             }

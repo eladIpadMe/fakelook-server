@@ -41,6 +41,7 @@ namespace fakeLook_starter.Interfaces
     public interface IUserRepository : IRepository<User>
     {
         public User findItem(User item);
+        public int GetUserIdByUserName(string UserName);
     }
     public interface IUserTaggedCommentRepository : IRepository<UserTaggedComment>
     {

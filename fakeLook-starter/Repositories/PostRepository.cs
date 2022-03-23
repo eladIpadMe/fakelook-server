@@ -13,14 +13,34 @@ namespace fakeLook_starter.Repositories
     {
         readonly private DataContext _context;
         readonly private IDtoConverter _converter;
-        public PostRepository(DataContext context, IDtoConverter converter)
+        readonly private ITagRepository _tagRepository;
+        public PostRepository(DataContext context, IDtoConverter converter
+            ,ITagRepository tagRepository)
         {
             _context = context;
             _converter = converter;
+            _tagRepository = tagRepository;
         }
 
         public async Task<Post> Add(Post item)
         {
+            //for(int i = 0; i< item.Tags.Count; i++)
+            //{
+            //   var currentTag = _context.Tags.FirstOrDefault(t => t.Content == item.Tags[i].Content)
+            //}
+            var postHashTags = new List<Tag>();
+            foreach(var tag in item.Tags)
+            {
+                var hashtag = _tagRepository.Add(tag);
+                postHashTags.Add(await hashtag);
+                //var currentTag = _context.Tags.FirstOrDefault(t => t.Content == tag.Content);
+                //if(currentTag != null)
+                //{
+                //    tag.Id = currentTag.Id;
+                //    tag.
+                //} 
+            }
+            item.Tags = postHashTags;
             var res = _context.Posts.Add(item);
             await _context.SaveChangesAsync();
             return res.Entity;
