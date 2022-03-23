@@ -20,7 +20,7 @@ namespace fakeLook_starter.Repositories
 
         public async Task<Like> Add(Like item)
         {
-            var like = _context.Likes.SingleOrDefault(l => l.UserId == item.UserId && l.PostId == item.PostId);
+            var like = _context.Likes.FirstOrDefault(l => l.UserId == item.UserId && l.PostId == item.PostId);
             if(like == null)
             {
                 var res = _context.Likes.Add(item);

@@ -21,7 +21,7 @@ namespace fakeLook_starter.Controllers
 
         // GET: api/<TagController>
         [HttpGet]
-        //[TypeFilter(typeof(GetUserActionFilter))]
+        [TypeFilter(typeof(GetUserActionFilter))]
         public IEnumerable<Tag> Get()
         {
             return _repository.GetAll();

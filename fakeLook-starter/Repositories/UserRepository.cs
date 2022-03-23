@@ -21,10 +21,9 @@ namespace fakeLook_starter.Repositories
         }
         public async Task<User> Add(User item)
         {
-            var user = _context.Users.Where(x => x.UserName == item.UserName).FirstOrDefault();
+            var user = _context.Users.FirstOrDefault(x => x.UserName == item.UserName);
             
             if(user == null) {
-                //item.Password = item.Password.GetHashCode().ToString();
                 var res = _context.Users.Add(item);
                 await _context.SaveChangesAsync();
                 return res.Entity;
@@ -81,46 +80,56 @@ namespace fakeLook_starter.Repositories
             return _context.Users.Where(user => user.UserName == item.UserName && user.Password == item.Password).SingleOrDefault();
             }
 
-    //    private User DtoLogic(User user)
-    //    {
-    //        var dtoUser = _converter.DtoUser(user);
-    //        dtoUser.Comments = user.Comments.Count > 0 ? user.Comments.Select(c =>
-    //        {
-    //            var dtoComment = _converter.DtoComment(c);
-    //            //dtoComment.User = _converter.DtoUser(c.User);
-    //            dtoComment.Post = _converter.DtoPost(c.Post);
-    //            dtoComment.Tags = c.Tags.Count > 0 ? c.Tags.Select(t =>
-    //             {
-    //                 var dtoTag = _converter.DtoTag(t);
-    //                 return dtoTag;
-    //             }).ToArray() : new List<Tag>();
+        public int GetUserIdByUserName(string UserName)
+        {
+            var res = _context.Users.SingleOrDefault(u => u.UserName.Equals(UserName));
+            //Where(user =>
+            //user.UserName.Equals(UserName))
 
-    //            dtoComment.UserTaggedComment = c.UserTaggedComment.Count > 0 ? c.UserTaggedComment.Select(ut =>
-    //            {
-    //                return _converter.DtoUserTaggedComment(ut);
-    //            }).ToArray() : new List<UserTaggedComment>();
+            if (res != null) return res.Id;
+            return 0;
+        }
 
-    //            return dtoComment;
-    //        }).ToArray() : new List<Comment>();
-    //        dtoUser.Posts = user.Posts.Count > 0 ? user.Posts.Select(p =>
-    //        {
-    //            var dtoPost = _converter.DtoPost(p);
-    //            dtoPost.Likes = p.Likes.Count > 0 ? p.Likes.Select(l =>
-    //            {
-    //                var dtoLike = _converter.DtoLike(l);
-    //                dtoLike.User = _converter.DtoUser(l.User);
-    //                return dtoLike;
-    //            }).ToList() : new List<Like>();
-    //            dtoPost.Comments = p.Comments.Count > 0 ? p.Comments.Select(c =>
-    //            {
-    //                var dtoComment = _converter.DtoComment(c);
-    //                dtoComment.User = _converter.DtoUser(c.User);
+        //    private User DtoLogic(User user)
+        //    {
+        //        var dtoUser = _converter.DtoUser(user);
+        //        dtoUser.Comments = user.Comments.Count > 0 ? user.Comments.Select(c =>
+        //        {
+        //            var dtoComment = _converter.DtoComment(c);
+        //            //dtoComment.User = _converter.DtoUser(c.User);
+        //            dtoComment.Post = _converter.DtoPost(c.Post);
+        //            dtoComment.Tags = c.Tags.Count > 0 ? c.Tags.Select(t =>
+        //             {
+        //                 var dtoTag = _converter.DtoTag(t);
+        //                 return dtoTag;
+        //             }).ToArray() : new List<Tag>();
 
-    //            })
-    //        })
+        //            dtoComment.UserTaggedComment = c.UserTaggedComment.Count > 0 ? c.UserTaggedComment.Select(ut =>
+        //            {
+        //                return _converter.DtoUserTaggedComment(ut);
+        //            }).ToArray() : new List<UserTaggedComment>();
 
-    //        return dtoUser;
-    //    }
+        //            return dtoComment;
+        //        }).ToArray() : new List<Comment>();
+        //        dtoUser.Posts = user.Posts.Count > 0 ? user.Posts.Select(p =>
+        //        {
+        //            var dtoPost = _converter.DtoPost(p);
+        //            dtoPost.Likes = p.Likes.Count > 0 ? p.Likes.Select(l =>
+        //            {
+        //                var dtoLike = _converter.DtoLike(l);
+        //                dtoLike.User = _converter.DtoUser(l.User);
+        //                return dtoLike;
+        //            }).ToList() : new List<Like>();
+        //            dtoPost.Comments = p.Comments.Count > 0 ? p.Comments.Select(c =>
+        //            {
+        //                var dtoComment = _converter.DtoComment(c);
+        //                dtoComment.User = _converter.DtoUser(c.User);
+
+        //            })
+        //        })
+
+        //        return dtoUser;
+        //    }
     }
 
 

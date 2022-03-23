@@ -31,7 +31,7 @@ namespace fakeLook_starter.Controllers
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        [TypeFilter(typeof(GetUserActionFilter))]
+        //[TypeFilter(typeof(GetUserActionFilter))]
         public JsonResult Get(int id)
         {
             return new JsonResult(_repository.GetById(id));
@@ -57,6 +57,14 @@ namespace fakeLook_starter.Controllers
         public async Task<ActionResult<User>> Delete(int id)
         {
             return await _repository.Delete(id);
+        }
+
+        [HttpGet]
+        [Route("GetUserIdByUserName")]
+        //[TypeFilter(typeof(GetUserActionFilter))]
+        public JsonResult GetUserIdByUserName(string userName)
+        {
+            return new JsonResult(_repository.GetUserIdByUserName(userName));
         }
     }
     

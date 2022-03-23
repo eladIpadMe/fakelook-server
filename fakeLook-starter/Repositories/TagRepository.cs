@@ -23,7 +23,7 @@ namespace fakeLook_starter.Repositories
         }
         public async Task<Tag> Add(Tag item)
         {
-            var tag = _context.Tags.SingleOrDefault(t => t.Content == item.Content);
+            var tag = _context.Tags.FirstOrDefault(t => t.Content == item.Content);
             if(tag == null){
                 var res = _context.Tags.Add(item);
                 await _context.SaveChangesAsync();
