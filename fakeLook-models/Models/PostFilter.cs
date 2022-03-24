@@ -13,10 +13,10 @@ namespace fakeLook_models.Models
         public DateTime? endingDate { get; set; }
         public ICollection<string> hashtags { get; set; }
         public ICollection<string> taggedUsers { get; set; }
+        //date filter - only post that published in dates range will return true
         public bool checkDate(DateTime postDate, Nullable<DateTime> startingDate, Nullable<DateTime> endingDate)
         {
             bool date;
-            //int res;
             if (!startingDate.HasValue && !endingDate.HasValue)
             {
                 return true;
@@ -36,7 +36,7 @@ namespace fakeLook_models.Models
             }
             return date;
         }
-
+        //publisher filter - only post whose publisher is the wanted publisher will return true
         public bool checkPublishers(string postUserName, ICollection<string> publishers)
         {
             if (publishers == null || publishers.Count == 0)
@@ -45,6 +45,7 @@ namespace fakeLook_models.Models
             }
             return publishers.Contains(postUserName);
         }
+        //hashtag filter - only post that has one or more hashtags as input will return true
         public bool checkHashTaggs(ICollection<Tag> postTags, ICollection<string> filtertaggs)
         {
             if (filtertaggs == null || filtertaggs.Count == 0)
@@ -67,7 +68,7 @@ namespace fakeLook_models.Models
             }
             return false;
         }
-
+        //user tagged filter - only post that has one or more user tagged as input will return true
         public bool checkUsersTagged(ICollection<UserTaggedPost> taggedPost, ICollection<string> taggedFilter)
         {
 

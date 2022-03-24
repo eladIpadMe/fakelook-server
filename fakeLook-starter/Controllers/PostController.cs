@@ -75,21 +75,20 @@ namespace fakeLook_starter.Controllers
         {
             return await _repository.Delete(id);
         }
-
+        // receieved a filtered object from client and returns a new array of filtered posts 
         [HttpPost]
         [Route("Filter")]
         public ICollection<Post> Filter([FromBody] PostFilter filter)
         {
             var res = _repository.GetByPredicate(post =>
             {
-                string dateNew = post.Date.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
-                DateTime daten = Convert.ToDateTime(dateNew);
+                string strDate = post.Date.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                DateTime postDate = Convert.ToDateTime(strDate);
                 string userName = _repository.GetUsernameById(post.UserId);
                 bool taggs = filter.checkHashTaggs(post.Tags, filter.hashtags);
                 bool taggedUsers = filter.checkUsersTagged(post.UserTaggedPost, filter.taggedUsers);
                 bool publishers = filter.checkPublishers(userName, filter.Publishers);
-                bool date = filter.checkDate(daten, filter.startingDate, filter.endingDate);
-                var final = date && publishers && taggedUsers && taggs;
+                bool date = filter.checkDate(postDate, filter.startingDate, filter.endingDate);
                 return date && publishers && taggedUsers && taggs;
             });
             return res;
